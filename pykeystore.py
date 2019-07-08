@@ -276,9 +276,9 @@ def download_cmd(tool, args):
     with open(tempfile, 'w') as fout:
         if not execute(cmd, input='q', encoding='ascii', stdout=fout):
             return
-    cmd = ('openssl', 'x509', '-outform', 'pem')
+    cmd = ['openssl', 'x509', '-outform', 'pem']
     if pemfile:
-        cmd += ('-out', pemfile)
+        cmd += ['-out', pemfile]
     echo_command(cmd)
     with open(tempfile, 'r') as fin:
         if not execute(cmd, stdin=fin):
@@ -295,7 +295,7 @@ def help_cmd(tool, args):
     print('  '+'\n  '.join([f.usage for f in uniq(COMMANDS.values())]))
     print()
     
-@command('q','quit', usage='quit / q : exit program')
+@command('q','quit','^d', usage='quit / q : exit program')
 def quit_cmd(tool, args):
     if args:
         return BadUsage
@@ -315,9 +315,6 @@ def menu(tool):
     prompt = '%s > '%(tool.keystore or 'no keystore')
     try:
         choice = input(prompt).strip()
-        if choice=='^D':
-            # in case someone actually types this
-            return 'exit'
     except EOFError:
         print()
         return 'exit'
