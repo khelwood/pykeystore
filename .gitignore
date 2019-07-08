@@ -102,3 +102,12 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# keystore files
+*.jks
+
+# pem files
+*.pem
+
+# temporary keystore file
+_temp_file
